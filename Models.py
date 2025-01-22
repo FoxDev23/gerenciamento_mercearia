@@ -24,7 +24,7 @@ class Estoque:
 
 #Como no caso do Estoque, aqui também foi preciso referenciar o "itensVendidos" para identificar que ele é um elemento da classe Produtos.
 class Vendas:
-    def __init__(self, itensVendidos: Produtos, vendedor, comprador, quantidadeVendida, data = datetime.now()):
+    def __init__(self, itensVendidos: Produtos, vendedor, comprador, quantidadeVendida, data = datetime.now().strftime("%d/%m/%Y")):
         self.itensVendidos = itensVendidos
         self.vendedor = vendedor
         self.comprador = comprador
