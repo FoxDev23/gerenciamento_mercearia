@@ -4,3 +4,4 @@ Legumes
 Laticínios
 Cereais
 Bebidas
+frios
