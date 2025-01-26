@@ -1,7 +1,7 @@
 Frutas
-Verduras
+Frios
 Legumes
 Laticínios
 Cereais
 Bebidas
-frios
+Verduras

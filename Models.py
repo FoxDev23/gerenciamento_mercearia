@@ -4,7 +4,6 @@ from datetime import datetime
 
 
 #Definindo as classes da aplicação...
-
 class Categoria:
     def __init__(self, categoria):
         self.categoria = categoria
@@ -16,7 +15,6 @@ class Produtos:
         self.categoria = categoria
 
 #No caso abaixo, descrevi que "produto" é uma variável do tipo "Produtos", para referenciar do que se trata.
-
 class Estoque:
     def __init__(self, produto: Produtos, quantidade):
         self.produto = produto
