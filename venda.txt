@@ -1,3 +1,5 @@
-banana|5|frutas|caio|marcos|3|21/01/2025
-morango|3|frutas|caio|marcos|3|21/01/2025
-
+Uva|5|Frutas|Fernando|Stanley|4|27/01/2025
+Uva|5|Frutas|Fernando|Stanley|7|27/01/2025
+Cenoura|8|Legumes|Fernando|Stanley|1|27/01/2025
+Berinjela|7|Legumes|Fernando|Stanley|8|27/01/2025
+Melancia|3|Frutas|Fernando|Stanley|2|27/01/2025
