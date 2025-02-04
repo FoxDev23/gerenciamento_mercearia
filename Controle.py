@@ -201,7 +201,28 @@ class ControleVenda:
                     f"Quantidade: {i['quantidade']}\n")
             a += 1
 
+    def mostrarVenda(self, dataInicio, dataTermino):
+        vendas = DaoVenda.ler()
+        dataInicio = datetime.strptime(dataInicio, '%d/%m/%Y')
+        dataTermino = datetime.strptime(dataTermino, '%d/%m/%Y')
 
+        vendasSelecionadas = list(filter(lambda x: datetime.strptime(x.data, '%d/%m/%Y') >= dataInicio and datetime.strptime(x.data, '%d/%m/%Y') <= dataTermino, vendas))
+
+        cont = 1
+        total = 0
+        for i in vendasSelecionadas:
+            print(f'===============Venda [{cont}]===============')
+            print(f'Nome: {i.itensVendidos.nome}\n'
+            f'Categoria: {i.itensVendidos.categoria}\n'
+            f'Data: {i.data}\n'
+            f'Quantidade: {i.quantidadeVendida}\n'
+            f'Cliente: {i.comprador}\n'
+            f'Vendedor: {i.vendedor}')
+
+            total += int(i.itensVendidos.preco) * int(i.quantidadeVendida)
+            cont += 1
+
+        print(f'Total Vendido: {total}')
 
 a = ControleVenda()
-a.relatorioProdutos()
+a.mostrarVenda('27/01/2025', '27/01/2025')
