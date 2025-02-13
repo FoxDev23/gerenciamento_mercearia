@@ -224,5 +224,190 @@ class ControleVenda:
 
         print(f'Total Vendido: {total}')
 
-a = ControleVenda()
-a.mostrarVenda('27/01/2025', '27/01/2025')
+class ControleFornecedor:
+    def cadastrarFornecedor(self, nome, cnpj, telefone, categoria):
+        x = DaoFornecedor.ler()
+        listaCnpj = list(filter(lambda x: x.cnpj == cnpj, x))
+        listaTelefone = list(filter(lambda x: x.cnpj == cnpj, x))
+        if len(listaCnpj) > 0:
+            print('CNPJ já cadastrado no sistema.')
+        elif len(listaTelefone) > 0:
+            print('Telefone já cadastrado no sistema.')
+        else:
+            if len(cnpj) == 14 and len(telefone) <= 11 and len(telefone) >= 10:
+                DaoFornecedor.salvar(Fornecedor(nome, cnpj, telefone, categoria))
+            else:
+                print('Digite um CNPJ ou telefone válido.')
+
+    def alterarFornecedor(self, nomeAlterar, novoNome, novoCnpj, novoTelefone, novoCategoria):
+        x = DaoFornecedor.ler()
+
+        est = list(filter(lambda x: x.nome == nomeAlterar, x))
+        if len(est) > 0:
+            est = list(filter(lambda x: x.cnpj == novoCnpj, x))
+            if len(est) == 0:
+                x = list(map(lambda x: Fornecedor(novoNome, novoCnpj, novoTelefone, novoCategoria) if(x.nome == nomeAlterar) else(x), x))
+            else:
+                print("CNPJ já existente no sistema.")
+        else:
+            print("O fornecedor que deseja alterar não está cadastrado no sistema.")
+        
+        with open('fornecedores.txt','w') as arq:
+            for i in x:
+                arq.writelines(i.nome + "|" + i.cnpj + "|" + i.telefone + "|" + str(i.categoria))
+                arq.writelines('\n')
+            print("Fornecedor alterado com sucesso.")
+
+    def removerFornecedor(self, nome):
+        x = DaoFornecedor.ler()
+
+        est = list(filter(lambda x: x.nome == nome, x))
+        if len(est) > 0:
+            for i in range(len(x)):
+                if x[i].nome == nome:
+                    del x[i]
+                    break
+        else:
+            print('O fornecedor que deseja remover não existe.')
+            return None
+        
+        with open ('fornecedores.txt','w') as arq:
+            for i in x:
+                arq.writelines(i.nome + "|" + i.cnpj + "|" + i.telefone + "|" + str(i.categoria))
+                arq.writelines('\n')
+            print('Fornecedor removido com sucesso.')
+
+    def mostrarFornecedores(self):
+        fornecedores = DaoFornecedor.ler()
+        if len(fornecedores) == 0:
+            print('Lista de fornecedores vazia.')
+
+        for i in fornecedores:
+            print('===============Fornecedores===============')
+            print(f'Categoria Fornecida: {i.categoria}\n'
+                  f'Nome: {i.nome}\n'
+                  f'Telefone: {i.telefone}\n'
+                  f'Cnpj: {i.cnpj}')
+
+class ControleCliente:
+    def cadastrarCliente(self, nome, cpf, telefone, email, endereco):
+        x = DaoPessoa.ler()
+        listaCpf = list(filter(lambda x: x.cpf == cpf, x))
+        if len(listaCpf) > 0:
+            print('CPF já cadastrado no sistema.')
+        else:
+            if len(cpf) == 11 and len(telefone) >= 10 and len(telefone) <= 11:
+                DaoPessoa.salvar(Pessoa(nome, cpf, telefone, email, endereco))
+            else:
+                print('Digite um CPF ou telefone válido.')
+
+    def alterarCliente(self, nomeAlterar, novoNome, novoCpf, novoTelefone, novoEmail, novoEndereco):
+        x = DaoPessoa.ler()
+
+        est = list(filter(lambda x: x.nome == nomeAlterar, x))
+        if len(est) > 0:
+                x = list(map(lambda x: Pessoa(novoNome, novoCpf, novoTelefone, novoEmail, novoEndereco) if(x.nome == nomeAlterar) else(x), x))
+            
+        else:
+            print("O cliente que deseja alterar não está cadastrado no sistema.")
+        
+        with open('clientes.txt','w') as arq:
+            for i in x:
+                arq.writelines(i.nome + "|" + i.cpf + "|" + i.telefone + "|" + i.email + "|" + i.endereco)
+                arq.writelines('\n')
+            print("Cliente alterado com sucesso.")
+
+    def removerCiente(self, nome):
+        x = DaoPessoa.ler()
+
+        est = list(filter(lambda x: x.nome == nome, x))
+        if len(est) > 0:
+            for i in range(len(x)):
+                if x[i].nome == nome:
+                    del x[i]
+                    break
+        else:
+            print('O cliente que deseja remover não existe.')
+            return None
+        
+        with open ('clientes.txt','w') as arq:
+            for i in x:
+                arq.writelines(i.nome + "|" + i.cpf + "|" + i.telefone + "|" + i.email + "|" + i.endereco)
+                arq.writelines('\n')
+            print('Cliente removido com sucesso.')
+
+    def mostrarClientes(self):
+        clientes = DaoPessoa.ler()
+        if len(clientes) == 0:
+            print('Lista de clientes vazia.')
+
+        for i in clientes:
+            print('===============Clientes===============')
+            print(f'Nome: {i.nome}\n'
+                  f'Telefone: {i.telefone}\n'
+                  f'Cpf: {i.cpf}\n'
+                  f'Email: {i.email}\n'
+                  f'Endereço: {i.endereco}')
+
+class ControleFuncionario:
+    def cadastrarFuncionario(self, clt, nome, cpf, telefone, email, endereco):
+        x = DaoFuncionario.ler()
+        listaCpf = list(filter(lambda x: x.cpf == cpf, x))
+        listaClt = list(filter(lambda x: x.clt == clt, x))
+        if len(listaCpf) > 0:
+            print('CPF já cadastrado no sistema.')
+        elif len(listaClt) > 0:
+            print("Já existe um funcionário com essa clt.")
+        else:
+            if len(cpf) == 11 and len(telefone) >= 10 and len(telefone) <= 11:
+                DaoFuncionario.salvar(Pessoa(clt, nome, cpf, telefone, email, endereco))
+            else:
+                print('Digite um CPF ou telefone válido.')
+
+    def alterarFuncionario(self, nomeAlterar, novoNome, novoClt, novoCpf, novoTelefone, novoEmail, novoEndereco):
+        x = DaoFuncionario.ler()
+
+        est = list(filter(lambda x: x.nome == nomeAlterar, x))
+        if len(est) > 0:
+                x = list(map(lambda x: Funcionario(novoNome, novoClt, novoCpf, novoTelefone, novoEmail, novoEndereco) if(x.nome == nomeAlterar) else(x), x))   
+        else:
+            print("O funcionário que deseja alterar não está cadastrado no sistema.")
+        
+        with open('funcionarios.txt','w') as arq:
+            for i in x:
+                arq.writelines(i.clt + "|" + i.nome + "|" + i.cpf + "|" + i.telefone + "|" + i.email + "|" + i.endereco)
+                arq.writelines('\n')
+            print("Funcionário alterado com sucesso.")
+
+    def removerFuncionario(self, nome):
+        x = DaoFuncionario.ler()
+
+        est = list(filter(lambda x: x.nome == nome, x))
+        if len(est) > 0:
+            for i in range(len(x)):
+                if x[i].nome == nome:
+                    del x[i]
+                    break
+        else:
+            print('O funcionário que deseja remover não existe.')
+            return None
+        
+        with open ('funcionarios.txt','w') as arq:
+            for i in x:
+                arq.writelines(i.clt + "|" + i.nome + "|" + i.cpf + "|" + i.telefone + "|" + i.email + "|" + i.endereco)
+                arq.writelines('\n')
+            print('Funcionário removido com sucesso.')
+
+    def mostrarFuncionarios(self):
+        funcionarios = DaoFuncionario.ler()
+        if len(funcionarios) == 0:
+            print('Lista de funcionários vazia.')
+
+        for i in funcionarios:
+            print('===============Funcionários===============')
+            print(f'Clt: {i.clt}\n'
+                  f'Nome: {i.nome}\n'
+                  f'Telefone: {i.telefone}\n'
+                  f'Cpf: {i.cpf}\n'
+                  f'Email: {i.email}\n'
+                  f'Endereço: {i.endereco}')
