@@ -1,4 +1,0 @@
-Cenoura|8|Legumes|49
-Berinjela|7|Legumes|42
-Melancia|3|Frutas|48
-Uva|5|Frutas|39

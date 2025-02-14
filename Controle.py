@@ -35,6 +35,16 @@ class ControleCategoria:
                     arq.writelines(i.categoria)
                     arq.writelines('\n')
 
+        estoque = DaoEstoque.ler()
+
+        estoque = list(map(lambda x: Estoque(Produtos(x.produto.nome, x.produto.preco, "Sem categoria"), x.quantidade) 
+                           if(x.produto.categoria == categoriaRemover) else (x), estoque))
+
+        with open('estoque.txt','w') as arq:
+            for i in estoque:
+                arq.writelines(i.produto.nome + "|" + i.produto.preco + "|" + i.produto.categoria + "|" + str(i.quantidade))
+                arq.writelines('\n')  
+
     def alterarCategoria(self, categoriaAlterar, categoriaModificada):
         x = DaoCategoria.ler()
 
@@ -48,7 +58,7 @@ class ControleCategoria:
                 # Produtos que estavam no estavam no estoque com a categoria que foi alterada, devem ter a situação atualizada simultaneamente.
 
             else:
-                print('A categoria que deseja alterar já existe.')
+                print('A categoria para a qual deseja alterar já existe.')
         else:
             print('A categoria que deseja alterar não existe.')
 
@@ -56,6 +66,16 @@ class ControleCategoria:
             for i in x:
                 arq.writelines(i.categoria)
                 arq.writelines('\n')
+
+        estoque = DaoEstoque.ler()
+
+        estoque = list(map(lambda x: Estoque(Produtos(x.produto.nome, x.produto.preco, categoriaModificada), x.quantidade) 
+                           if(x.produto.categoria == categoriaAlterar) else (x), estoque))
+
+        with open('estoque.txt','w') as arq:
+            for i in estoque:
+                arq.writelines(i.produto.nome + "|" + i.produto.preco + "|" + i.produto.categoria + "|" + str(i.quantidade))
+                arq.writelines('\n')  
 
     def mostrarCategoria(self):
         categorias = DaoCategoria.ler()
@@ -411,3 +431,4 @@ class ControleFuncionario:
                   f'Cpf: {i.cpf}\n'
                   f'Email: {i.email}\n'
                   f'Endereço: {i.endereco}')
+            

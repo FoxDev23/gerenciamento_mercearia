@@ -1,7 +1,0 @@
-Frutas
-Frios
-Legumes
-Laticínios
-Cereais
-Bebidas
-Verduras
